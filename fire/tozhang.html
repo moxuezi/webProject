@@ -6,8 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=gb2312">
 	<style>
 		body{margin:0;padding:0;overflow: hidden;}
-		.city{width:100%;position:fixed;bottom: 0px;z-index: 100;}
-		.city img{width: 100%;}
+		
 	</style>
 	<title>给你放烟花</title>
 <!--[if lt IE 9]>
@@ -16,17 +15,18 @@
 </head>
 <body onselectstart = "return false">
 
-<div style="height:700px;overflow:hidden;">
+<div style="height:100%;overflow:hidden;">
 
-	<canvas id='cas' style="background-image:url(img/bgzhang.jpg);">浏览器不支持canvas</canvas>
-	
+	<canvas id='cas' style="background-color:rgba(0,5,24,1);">浏览器不支持canvas</canvas>
+	<!-- <div class="city"><img src="https://img-blog.csdnimg.cn/ce9a197191204756be8fdac26bfe9d23.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAQembhA==,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center" alt="" /></div> -->
+	<img src="https://img-blog.csdnimg.cn/e8ec2a9517a84bf3ab742fd4e8deb167.png#pic_center" alt="" id="moon" style="visibility: hidden;"/>
 	<div style="display:none">
-		<div class="shape"><p>小张同学</p><p>儿童节快乐</p></div>
-		<div class="shape"><p>摩羯座的人</p><p>有灵性</p></div>
-		<div class="shape"><p>你很有趣</p><p>哈哈哈</p></div>
-		<div class="shape"><p>你很漂亮</p><p>哈哈哈</p></div>
-		<div class="shape"><p>你很温柔</p><p>哈哈哈</p></div>
-		<div class="shape"><p>我很喜欢你</p><p>哈哈哈</p></div>
+		<div class="shape">小张同学儿童节快乐</div>
+		<div class="shape">摩羯座的人有灵性</div>
+		<div class="shape">你很有趣哈哈哈</div>
+		<div class="shape">你很漂亮哈哈哈</div>
+		<div class="shape">你很温柔哈哈哈</div>
+		<div class="shape">我很喜欢你哈哈哈</div>
 	</div>
 	
 </div>
@@ -37,7 +37,7 @@
 		var octx = ocas.getContext("2d");
 		var ctx = canvas.getContext("2d");
 		ocas.width = canvas.width = window.innerWidth;
-		ocas.height = canvas.height = 700;
+		ocas.height = canvas.height = window.innerHeight;
 		var bigbooms = [];
 	
 		window.onload = function(){
@@ -45,7 +45,7 @@
 		}
 
 		function initAnimate(){
-			drawBg();
+			//drawBg();
 
 			lastTime = new Date();
 			animate();
@@ -54,8 +54,12 @@
 		var lastTime;
 		function animate(){
 			ctx.save();
-			ctx.fillStyle = "rgba(0,5,24,0.1)";
-			ctx.fillRect(0,0,canvas.width,canvas.height);
+			//ctx.fillStyle = "rgba(0,5,24,0.1)";
+			var img = new Image();
+			img.src = "img/bgzhang.jpg";
+			//console.log(img)
+			ctx.drawImage(img,0,0,ocas.width,ocas.height)
+			//ctx.fillRect(0,0,canvas.width,canvas.height);
 			ctx.restore();
 
 
@@ -65,22 +69,22 @@
 				var x = getRandom(canvas.width/5 , canvas.width*4/5);
 				var y = getRandom(50 , 200);
 				if(random){
-					var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,2,"#FFF" , {x:x , y:y});
+					var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,4,"#FFF" , {x:x , y:y});
 					bigbooms.push(bigboom)
 				}
 				else {
-					var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,2,"#FFF" , {x:canvas.width/2 , y:200} , document.querySelectorAll(".shape")[parseInt(getRandom(0, document.querySelectorAll(".shape").length))]);
+					var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,4,"#FFF" , {x:canvas.width/2 , y:200} , document.querySelectorAll(".shape")[parseInt(getRandom(0, document.querySelectorAll(".shape").length))]);
 					bigbooms.push(bigboom)
 				}
 				lastTime = newTime;
 				console.log(bigbooms)
 			}
 
-			stars.foreach(function(){
-				this.paint();
-			})
+			// stars.foreach(function(){
+			// 	this.paint();
+			// })
 
-			drawMoon();
+			// drawMoon();
 
 			bigbooms.foreach(function(index){
 				var that = this;
@@ -105,7 +109,7 @@
 
 		function drawMoon(){
 			var moon = document.getElementById("moon");
-			var centerX = canvas.width-200 , centerY = 100 , width = 0;
+			var centerX = canvas.width-200 , centerY = 100 , width = 80;
 			if(moon.complete){
 				ctx.drawImage(moon , centerX , centerY , width , width )
 			}
@@ -138,7 +142,7 @@
 		canvas.onclick = function(){
 			var x = event.clientX;
 			var y = event.clientY;
-			var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,2,"#FFF" , {x:x , y:y});
+			var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,4,"#FFF" , {x:x , y:y});
 			bigbooms.push(bigboom)
 		}
 
@@ -146,7 +150,7 @@
 		// 	var touch = event.targetTouches[0];
 		// 	var x = event.pageX;
 		// 	var y = event.pageY;
-		// 	var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,2,"#FFF" , {x:x , y:y});
+		// 	var bigboom = new Boom(getRandom(canvas.width/3,canvas.width*2/3) ,4,"#FFF" , {x:x , y:y});
 		// 	bigbooms.push(bigboom)
 		// })
 
@@ -219,7 +223,7 @@
 					var a = getRandom(-Math.PI, Math.PI);
 					var x = getRandom(0, fanwei) * Math.cos(a) + this.x;
 					var y = getRandom(0, fanwei) * Math.sin(a) + this.y; 
-					var radius = getRandom(0 , 2)
+					var radius = getRandom(0 , 4)
 					var frag = new Frag(this.x , this.y , radius , color , x , y );
 					this.booms.push(frag);
 				}
@@ -233,7 +237,7 @@
 						color = {a:dots[i].a,b:dots[i].b,c:dots[i].c}
 						var x = dots[i].x;
 						var y = dots[i].y;
-						var radius = 1;
+						var radius = 3;
 						var frag = new Frag(that.x , that.y , radius , color , x-dx , y-dy);
 						that.booms.push(frag);
 					}
@@ -306,9 +310,9 @@
 				var r = Math.random()*maxRadius;
 				var x = Math.random()*canvas.width;
 				var y = Math.random()*2*canvas.height - canvas.height;
-				var star = new Star(x , y , r);
-				stars.push(star);
-				star.paint()
+				//var star = new Star(x , y , r);
+				//stars.push(star);
+				//star.paint()
 			}
 
 		}
@@ -320,7 +324,7 @@
 			paint:function(){
 				ctx.save();
 				ctx.beginPath();
-				ctx.arc(this.x , this.y , this.r , 0 , 2*Math.PI);
+			//	ctx.arc(this.x , this.y , this.r , 0 , 2*Math.PI);
 				ctx.fillStyle = "rgba(255,255,255,"+this.r+")";
 				ctx.fill();
 				ctx.restore();
@@ -362,11 +366,11 @@
 		}
 		function toggleSound() {
             var music = document.getElementById("vd");//获取ID  
-                console.log(music);
-                console.log(music.paused);
+                //console.log(music);
+                //console.log(music.paused);
             if (music.paused) { //判读是否播放  
                 music.paused=false;
-                music.play(); //没有就播放 
+                //music.play(); //没有就播放 
             	}         
         }
 		setInterval("toggleSound()",1);
