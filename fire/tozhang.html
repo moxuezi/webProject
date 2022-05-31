@@ -58,7 +58,11 @@
 			var img = new Image();
 			img.src = "img/bgzhang.jpg";
 			//console.log(img)
-			ctx.drawImage(img,0,0,ocas.width,ocas.height)
+			var scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+    		// get the top left position of the image
+    		var x = (canvas.width / 2) - (img.width / 2) * scale;
+    		var y = (canvas.height / 2) - (img.height / 2) * scale;
+    		ctx.drawImage(img, 0, 0, img.width * scale, img.height * scale);
 			//ctx.fillRect(0,0,canvas.width,canvas.height);
 			ctx.restore();
 
