@@ -227,7 +227,7 @@
 					var a = getRandom(-Math.PI, Math.PI);
 					var x = getRandom(0, fanwei) * Math.cos(a) + this.x;
 					var y = getRandom(0, fanwei) * Math.sin(a) + this.y; 
-					var radius = getRandom(0 , 4)
+					var radius = getRandom(0 , 3)
 					var frag = new Frag(this.x , this.y , radius , color , x , y );
 					this.booms.push(frag);
 				}
@@ -241,7 +241,7 @@
 						color = {a:dots[i].a,b:dots[i].b,c:dots[i].c}
 						var x = dots[i].x;
 						var y = dots[i].y;
-						var radius = 3;
+						var radius = 2;
 						var frag = new Frag(that.x , that.y , radius , color , x-dx , y-dy);
 						that.booms.push(frag);
 					}
@@ -263,7 +263,7 @@
 			else {
 				var text = ele.innerHTML;
 				context.save();
-				var fontSize =70;
+				var fontSize =60;
 				context.font = fontSize+"px 宋体 bold";
 				context.textAlign = "center";
 				context.textBaseline = "middle";
